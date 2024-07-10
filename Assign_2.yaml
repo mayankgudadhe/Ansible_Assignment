@@ -61,11 +61,6 @@
         src: /usr/local/bin/docker-compose
         dest: /usr/bin/docker-compose
         state: link
-    - name: Copy Dockerfile
-      copy:
-        src: /home/mayank/Dockerfile
-        dest: /home/mayank/
-
     - name: Install Python 3
       apt:
         name: python3
@@ -89,10 +84,6 @@
       community.docker.docker_image:
         name: tomcat:latest
         source: pull
-          #- name: Stop container
-      #community.docker.docker_container:
-        #name: cont_1
-        #state: stopped
 
     - name: Delete container
       community.docker.docker_container:
