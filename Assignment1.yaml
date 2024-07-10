@@ -1,0 +1,28 @@
+---
+- hosts: Deploy
+  user: mayank
+  become: yes
+  connection: ssh
+
+  tasks:
+    - name: Install_Java
+      action: yum pkg=java-11-amazon-corretto.x86_64 state=present
+    - name: Remove_dir
+      command: rm -rf server
+    - name: Dir_create
+      command: mkdir server
+    - name: Install_Tomcat
+      action: get_url url=https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.91/bin/apache-tomcat-9.0.91.zip dest=/home/mayank/server
+    - name: Unzip_tomcat
+      action: unarchive src=/home/mayank/server/apache-tomcat-9.0.91.zip dest=/home/mayank/server
+    - name: change_own
+      command: chown mayank /home/mayank/server/apache-tomcat-9.0.91/bin/startup.sh
+    - name: permission_tomcat
+      #action: file path=/home/mayank/server/apache-tomcat-9.0.91/bin/startup.sh state=file mode=0755 recurse=yes
+      command: chmod -R 777 /home/mayank/server/apache-tomcat-9.0.91
+    - name: Deploy_war
+      action: copy src=/home/mayank/project/target/LoginWebApp.war dest=/home/mayank/server/apache-tomcat-9.0.91/webapps
+    - name: Tomcat_start
+      shell: ./startup.sh
+      args:
+        chdir: /home/mayank/server/apache-tomcat-9.0.91/bin/
