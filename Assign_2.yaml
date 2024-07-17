@@ -1,3 +1,4 @@
+#Question: Install docker , docker-compose and deploy war inside tomcat container
 ---
 # Create War
 - hosts: devlinux, qalinux
