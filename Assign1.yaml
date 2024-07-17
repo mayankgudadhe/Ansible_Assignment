@@ -1,3 +1,4 @@
+Question:- Write playbook to install java , tomcat deploy war on tomcat start tomcat server on this two host
 ---
 - hosts: devlinux, qalinux
   user: mayank
